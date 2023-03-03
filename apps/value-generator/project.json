@@ -1,0 +1,52 @@
+{
+	"root": "apps/value-generator",
+	"sourceRoot": "apps/value-generator/src",
+	"projectType": "application",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/node:build",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/apps/value-generator",
+				"main": "apps/value-generator/src/main.ts",
+				"tsConfig": "apps/value-generator/tsconfig.app.json",
+				"assets": ["apps/value-generator/src/assets"]
+			},
+			"configurations": {
+				"production": {
+					"optimization": true,
+					"extractLicenses": true,
+					"inspect": false,
+					"fileReplacements": [
+						{
+							"replace": "apps/value-generator/src/environments/environment.ts",
+							"with": "apps/value-generator/src/environments/environment.prod.ts"
+						}
+					]
+				}
+			}
+		},
+		"serve": {
+			"executor": "@nrwl/node:execute",
+			"options": {
+				"buildTarget": "value-generator:build"
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["apps/value-generator/**/*.ts"]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/apps/value-generator"],
+			"options": {
+				"jestConfig": "apps/value-generator/jest.config.js",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}
